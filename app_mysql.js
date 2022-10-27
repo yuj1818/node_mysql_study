@@ -114,6 +114,18 @@ app.get('/topic/:id/delete', function(req, res){
         })
     })
 })
+app.post('/topic/:id/delete', function(req, res){
+    let id = req.params.id;
+    let sql = 'DELETE FROM topic WHERE id=?';
+    conn.query(sql, [id], function(err, result, field){
+        if(err){
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.redirect('/topic');
+        }
+    })
+})
 app.get(['/topic', '/topic/:id'], function(req, res){
     let sql = 'SELECT id, title FROM topic';
     conn.query(sql, function(err, topics, fields){
